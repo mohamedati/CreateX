@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Createx.Core.Entities;
 
@@ -7,11 +8,14 @@ public partial class Company
 {
     public int Id { get; set; }
 
+
+    [StringLength(50)]
     public string Name { get; set; } = null!;
 
     public int StoreId { get; set; }
 
-    public string Photo { get; set; } = null!;
+    
+    public byte[] Photo { get; set; } = null!;
 
     public DateTime CreatedAt { get; set; }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Createx.Core.Entities;
 
@@ -11,6 +12,8 @@ public partial class Order
 
     public string UserId { get; set; } = null!;
 
+
+    [StringLength(300)]
     public string DeliveryAddress { get; set; } = null!;
 
     public virtual ApplicationUser User { get; set; } = null!;

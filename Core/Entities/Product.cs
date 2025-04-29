@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Createx.Core.Entities;
 
@@ -7,14 +8,19 @@ public partial class Product
 {
     public int Id { get; set; }
 
+
+    [StringLength(50)]
     public string NameAr { get; set; } = null!;
 
+
+    [StringLength(50)]
     public string? NameEn { get; set; }
 
     public int? ParentProductId { get; set; }
 
     public int StoreId { get; set; }
 
+    
     public double SalePrice { get; set; }
 
     public double PurchasePrice { get; set; }
@@ -27,7 +33,9 @@ public partial class Product
 
     public int TypeId { get; set; }
 
-    public string Photo { get; set; } = null!;
+
+
+    public byte[] Photo { get; set; } = null!;
 
     public DateTime CreatedAt { get; set; }
 

@@ -3,9 +3,12 @@ using System.Text;
 using Createx.Core.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Localization;
 using Microsoft.IdentityModel.Tokens;
 using Services.Services;
-
+using CreateX.API;
+using API;
+using API.Resources;
 namespace API.Attributes
 {
     public class HasPermissionAttribute: Attribute, IAsyncAuthorizationFilter
@@ -14,11 +17,13 @@ namespace API.Attributes
 
         public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
         {
+            var LangService = context.HttpContext.RequestServices.GetRequiredService<IStringLocalizer<Resource>>();
             var authorizationHeader = context.HttpContext.Request.Headers["Authorization"].FirstOrDefault();
 
             if (string.IsNullOrEmpty(authorizationHeader) || !authorizationHeader.StartsWith("Bearer "))
             {
-                throw new UnauthorizedAccessException("Missing or invalid Authorization header.");
+                var x = LangService["InvalidAuthorizationHeader"];
+                throw new UnauthorizedAccessException(x);
             }
 
             var token = authorizationHeader.Substring("Bearer ".Length).Trim();
@@ -37,7 +42,7 @@ namespace API.Attributes
 
                 if (user.RefreshTokenExpiresAt<=DateTime.Now)
                 {
-                    throw new UnauthorizedAccessException("Refresh token and Auth expired.");
+                    throw new UnauthorizedAccessException(LangService["AllTokensExpired"]);
                 }
                 else
                 {

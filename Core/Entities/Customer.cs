@@ -17,14 +17,20 @@ namespace Createx.Core.Entities
         [StringLength(100)]
         public string Name {  get; set; }
 
+
+        [StringLength(20)]
         public string PhoneNumber { get; set; } = null!;
 
+
+        [StringLength(50)]
         public string ConnectAuthority {  get; set; } = null!;
 
         public Activation Activation {  get; set; }
 
         public string AccountGroup {  get; set; } = null!;
 
+
+        [StringLength(100)]
         public string Region {  get; set; } = null!;
 
         public Gender Gender {  get; set; }

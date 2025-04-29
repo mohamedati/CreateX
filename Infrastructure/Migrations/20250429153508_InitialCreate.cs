@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateApplicationUserAndSeller : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -31,7 +31,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RefreshTokenExpiresAt = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RefreshTokenExpiresAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserType = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -61,7 +61,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -74,9 +74,9 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     StoreId = table.Column<int>(type: "int", nullable: false),
-                    Photo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Photo = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -91,8 +91,8 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Symbol = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Symbol = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     ExchangeRate = table.Column<double>(type: "float", nullable: false),
                     IsPrimary = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -107,7 +107,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -120,11 +120,11 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OwnerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    WhatsAppNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    OwnerName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    WhatsAppNumber = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     Link = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AccountPhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -251,7 +251,7 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    DeliveryAddress = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    DeliveryAddress = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -271,11 +271,11 @@ namespace Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ConnectAuthority = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    ConnectAuthority = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Activation = table.Column<int>(type: "int", nullable: false),
                     AccountGroup = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Region = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Region = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Gender = table.Column<int>(type: "int", nullable: false),
                     CityID = table.Column<int>(type: "int", nullable: false)
                 },
@@ -296,9 +296,9 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CityId = table.Column<int>(type: "int", nullable: false),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Notes = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -317,12 +317,12 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Order = table.Column<int>(type: "int", nullable: false),
                     StoreId = table.Column<int>(type: "int", nullable: false),
                     Photo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsPublish = table.Column<bool>(type: "bit", nullable: false),
-                    RedirectTo = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    RedirectTo = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -341,8 +341,8 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NameAr = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NameEn = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NameAr = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    NameEn = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     ParentProductId = table.Column<int>(type: "int", nullable: true),
                     StoreId = table.Column<int>(type: "int", nullable: false),
                     SalePrice = table.Column<double>(type: "float", nullable: false),
@@ -351,7 +351,7 @@ namespace Infrastructure.Migrations
                     Barcode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ExtraBarcode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TypeId = table.Column<int>(type: "int", nullable: false),
-                    Photo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Photo = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsPublish = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -405,12 +405,12 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ManagerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ManagerName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     CityId = table.Column<int>(type: "int", nullable: false),
                     DistrictId = table.Column<int>(type: "int", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Latitude = table.Column<double>(type: "float", nullable: false),
                     Longitude = table.Column<double>(type: "float", nullable: false),
                     StoreId = table.Column<int>(type: "int", nullable: false),

@@ -9,6 +9,7 @@ namespace API.Extentions
         {
             services.AddSwaggerGen(options =>
             {
+
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "My API",
@@ -25,6 +26,8 @@ namespace API.Extentions
                     In = ParameterLocation.Header,
                     Description = "Enter JWT token like: Bearer {your token}"
                 });
+
+                options.OperationFilter<SwaggerHeader>();
 
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
