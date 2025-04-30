@@ -12,6 +12,7 @@ using Core.Classes;
 using Createx.Core.Entities;
 using MediatR;
 using Microsoft.Extensions.Localization;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Areas.City.Queries
 {
@@ -39,6 +40,7 @@ namespace Application.Areas.City.Queries
         {
             return await context.Cities
                 .Where(a => request.Search.Trim() == "" || a.Name.Contains(request.Search))
+                .AsNoTracking()
                   .sort(request.SortColumn, request.SortOrder)
                   .ProjectTo<Createx.Core.Entities.City>(mapper.ConfigurationProvider)
                   .ToPaginatedListAsync<Createx.Core.Entities.City>(request.PageIndex, request.Size);

@@ -14,11 +14,11 @@ namespace Application.Extentions
 
             sortOrder = sortOrder?.ToLower() == "desc" ? "descending" : "ascending";
             string ordering = $"{sortColumn} {sortOrder}";
-            queryable.OrderBy(ordering);
-            return queryable;
+
+            return queryable.OrderBy(ordering); ;
         }
 
-        public static async Task<PaginatedList<T>> ToPaginatedListAsync<T>(this IQueryable<T> queryable,int page,int pagesize)
+        public static async Task<PaginatedList<T>> ToPaginatedListAsync<T>(this IQueryable<T> queryable,int page=1,int pagesize=10)
         {
             return new PaginatedList<T>
             {
