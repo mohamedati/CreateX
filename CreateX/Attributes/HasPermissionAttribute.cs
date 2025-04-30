@@ -8,7 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using Services.Services;
 using CreateX.API;
 using API;
-using API.Resources;
+using Application.Resources;
 namespace API.Attributes
 {
     public class HasPermissionAttribute: Attribute, IAsyncAuthorizationFilter

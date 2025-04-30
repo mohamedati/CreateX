@@ -1,11 +1,12 @@
 ﻿
+using Application.Common.Interfaces;
 using Createx.Core.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.DbContext
 {
-    public  class Context:IdentityDbContext<ApplicationUser>
+    public  class Context:IdentityDbContext<ApplicationUser>,IAppDbContext
     {
         public Context(DbContextOptions<Context> options):base(options) 
         {
@@ -35,5 +36,10 @@ namespace Infrastructure.DbContext
         public virtual DbSet<ProductType> ProductTypes { get; set; }
 
         public virtual DbSet<Store> Stores { get; set; }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+       => base.SaveChangesAsync(cancellationToken);
+
+        
     }
 }

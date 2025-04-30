@@ -1,4 +1,4 @@
-﻿namespace API.Resources
+﻿namespace Application.Resources
 {
     public class Resource
     {

@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using Application.Areas.City.Commands;
+using AutoMapper;
+using Createx.Core.Entities;
 
 namespace API.Configuration
 {
@@ -6,7 +8,8 @@ namespace API.Configuration
     {
         public Mappings()
         {
-                
+            CreateMap<CreateCity, City>().ReverseMap();
+            CreateMap<City, City>().ReverseMap();
         }
     }
 }
