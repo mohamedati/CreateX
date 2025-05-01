@@ -21,7 +21,7 @@ namespace API.Extentions
             operation.Parameters.Add(new OpenApiParameter
             {
                 Name = "culture",
-                In = ParameterLocation.Query,
+                In = ParameterLocation.Header,
                 Required = false,
                 Schema = new OpenApiSchema
                 {

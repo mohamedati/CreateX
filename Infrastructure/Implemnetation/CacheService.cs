@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿
 using System.Text.Json;
-using System.Threading.Tasks;
-using System.Threading.Tasks.Sources;
-using Services.Services;
+
+using Application.Services;
+
 using StackExchange.Redis;
 
 namespace Services.Implemnetation
@@ -29,7 +26,7 @@ namespace Services.Implemnetation
             return cachedResponse;
         }
 
-        public async  Task SetInCache(string Key, object value)
+        public async  Task SetInCache(string Key, object value,TimeSpan TTL)
         {
             if (value == null) return;
 
@@ -37,7 +34,7 @@ namespace Services.Implemnetation
 
             var jsonSerializer = JsonSerializer.Serialize(value, options);
 
-            await database.StringSetAsync(Key, jsonSerializer);
+            await database.StringSetAsync(Key, jsonSerializer,TTL);
         }
 
         public async Task ClearAllAsync(string pattern)

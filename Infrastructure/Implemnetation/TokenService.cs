@@ -3,19 +3,23 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using Application.Services;
 using Createx.Core.Entities;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Services.Services;
+
 
 namespace Services.Implemnetation
 {
     public class TokenService : ITokenService
     {
         private readonly IConfiguration config;
+        private readonly ICacheService cache;
 
-        public TokenService(IConfiguration config)
+        public TokenService(IConfiguration config,ICacheService cache)
         {
             this.config = config;
+            this.cache = cache;
         }
     
 
@@ -35,7 +39,7 @@ namespace Services.Implemnetation
                 issuer: config["JwtSettings:Issuer"],
                 audience: config["JwtSettings:Audience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddDays(15),
+                expires: DateTime.Now.AddMinutes(5),
                 signingCredentials: creds
             );
 
@@ -47,7 +51,31 @@ namespace Services.Implemnetation
             return Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
         }
 
-        
+        public string GenereateOTP()
+        {
+            var random = new Random();
+            string otp = string.Empty;
+
+            for (int i = 0; i < 6; i++)
+            {
+                otp += random.Next(0, 10); // توليد رقم من 0 إلى 9
+            }
+
+            return otp;
+        }
+
+        public async Task< bool> ValidateOtpAsync(string Email, string OTP)
+        {
+            var value=await cache.GetFromCache($"otp:{Email}");
+
+            if(value!=null && value.Trim('"') == OTP)
+            {
+                return true;
+            }
+
+            return false;
+
+        }
     }
     
 }

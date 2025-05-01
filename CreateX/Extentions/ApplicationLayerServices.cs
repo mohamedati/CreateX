@@ -6,9 +6,14 @@ using Infrastructure.DbContext;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Services.Implemnetation;
-using Services.Services;
+
 using AutoMapper;
 using Application;
+
+using API.Implemnetation;
+using API.Extentions;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Application.Services;
 
 
 namespace Core.Extentions
@@ -17,17 +22,20 @@ namespace Core.Extentions
     {
         public static IServiceCollection RegisterApplicatonLayerService(this IServiceCollection services, IConfiguration config)
         {
-
+            //Register services
             services.AddScoped<ICacheService, CacheService>();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddSingleton<IEmailSender, EmailSender>();
             services.AddScoped<IAppDbContext>(provider => provider.GetRequiredService<Context>());
 
+            //Add Database DI
 
             services.AddDbContextPool<Context>(options =>
             {
                 options.UseSqlServer(config.GetConnectionString("CreateX"));
             });
 
+            //Add AutoMapper
             services.AddAutoMapper(x=>x.AddProfile(new Mappings()));
 
 
@@ -35,7 +43,9 @@ namespace Core.Extentions
            services.AddMediatR(cfg =>
                 cfg.RegisterServicesFromAssembly(typeof(AssemblyReference).Assembly));
 
-            services.AddLocalization(/*options => options.ResourcesPath = "Resources"*/);
+
+            //Register Localization ar-En 
+            services.AddLocalization();
 
            services.Configure<RequestLocalizationOptions>(options =>
             {
@@ -47,6 +57,9 @@ namespace Core.Extentions
 
             });
 
+
+            //add services Helth Checker
+
             services.AddHealthChecks()
                  .AddSqlServer(config.GetConnectionString("CreateX"))
                      .AddRedis(config.GetConnectionString("Redis"));
@@ -55,7 +68,19 @@ namespace Core.Extentions
 
            services.AddHealthChecksUI(options => options.AddHealthCheckEndpoint("Health Check API", "/health")).AddInMemoryStorage();
 
+
+
+            services.Configure<HealthCheckPublisherOptions>(options =>
+            {
+                options.Delay = TimeSpan.FromSeconds(2);
+                options.Period = TimeSpan.FromHours(3);
+            });
+            services.AddSingleton<IHealthCheckPublisher, EmailHealthCheckPublisher>();
+
+
             return services;
         }
+
+        
     }
 }

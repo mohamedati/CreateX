@@ -18,9 +18,9 @@ namespace Application.Areas.City.Queries
 {
     public  class GetPaginatedCities:IRequest<PaginatedList<Createx.Core.Entities.City>>
     {
-        public int PageIndex { get; set; }
+        public int PageIndex { get; set; } = 1;
 
-        public int Size {  get; set; }
+        public int Size { get; set; } = 10;
 
         public string? Search { get; set; } = "";
 

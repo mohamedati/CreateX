@@ -11,7 +11,7 @@ namespace API.Areas
 {
     [Route("api/[controller]")]
     [ApiController]
-
+    [HasPermission]
  
     public class CityController(ISender sender) : ControllerBase
     {
