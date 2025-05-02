@@ -4,6 +4,7 @@ using CreateX.API.Extentions;
 using CreateX.API.MiddleWares;
 using HealthChecks.UI.Client;
 using Infrastructure.DbContext;
+using Infrastructure.Extentions;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -43,6 +44,8 @@ builder.Host.UseSerilog(); // Use Serilog for ASP.NET Core logging
 
 var app = builder.Build();
 
+
+app.UseMiddleware<GlobalErrorMiddleware>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -92,14 +95,38 @@ app.UseEndpoints(endpoints =>
  //For Attacks csrf Xss
 app.Use(async (context, next) =>
 {
+    // Prevent MIME-type sniffing
     context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+
+    // Prevent clickjacking
     context.Response.Headers.Add("X-Frame-Options", "DENY");
-    context.Response.Headers.Add("X-XSS-Protection", "1; mode=block");
+
+    // Control resources that can be loaded by the browser
     context.Response.Headers.Add("Content-Security-Policy", "default-src 'self';");
+
+    // Referrer Policy
+    context.Response.Headers.Add("Referrer-Policy", "no-referrer");
+
+    // Strict Transport Security (HSTS)
+    context.Response.Headers.Add("Strict-Transport-Security", "max-age=63072000; includeSubDomains; preload");
+
     await next();
 });
 
-app.UseMiddleware<GlobalErrorMiddleware>();
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    try
+    {
+        await IdentityDataInitializer.SeedRolesAsync(services);
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while seeding roles.");
+    }
+}
 
 app.UseSerilogRequestLogging(); // Log HTTP requests
 

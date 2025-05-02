@@ -1,18 +1,22 @@
 ﻿
 using Application.Common.Interfaces;
 using Createx.Core.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace Infrastructure.DbContext
 {
     public  class Context:IdentityDbContext<ApplicationUser>,IAppDbContext
     {
+
+
         public Context(DbContextOptions<Context> options):base(options) 
         {
-                
         }
-   
+
+     
         public virtual DbSet<Branch> Branches { get; set; }
 
         public virtual DbSet<Category> Categories { get; set; }
@@ -40,6 +44,6 @@ namespace Infrastructure.DbContext
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
        => base.SaveChangesAsync(cancellationToken);
 
-        
+     
     }
 }

@@ -41,7 +41,7 @@ namespace Application.Areas.Account.Commands.Login
             var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
             if (!result.Succeeded)
             {
-                throw new UnauthorizedAccessException(localizer["InvalidUSerNameOrPassword"]);
+                throw new UnauthorizedAccessException(localizer["InvalidUserNameOrPassword"]);
             }
             var refreshToken = tokenService.GenereateRefreshToken();
             user.RefreshToken = refreshToken;

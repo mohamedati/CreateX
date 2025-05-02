@@ -35,5 +35,7 @@ namespace Application.Common.Interfaces
          DbSet<Store> Stores { get; set; }
 
         public  Task<int> SaveChangesAsync(CancellationToken cancellationToken=default);
+
+ 
     }
 }
