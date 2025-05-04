@@ -49,6 +49,7 @@ namespace CreateX.API.MiddleWares
 
         }
 
+        //Build Response and assign to Request
         private static async Task _buildResponse(HttpContext context, string msg, HttpStatusCode httpStatus)
         {
             context.Response.StatusCode = (int)httpStatus;

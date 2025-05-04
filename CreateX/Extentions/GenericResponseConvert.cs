@@ -6,6 +6,8 @@ namespace API.Extentions
     public static class GenericResponseConvert
     {
 
+        //Extension Methods to Unify the Response of all EndPoints
+
         public static async Task<ActionResult> ToGenericResponse<T>(this Task<T> Target)
         {
 

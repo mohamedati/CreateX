@@ -7,6 +7,7 @@ namespace Application.Extentions
 {
     public static class IQuerableExtentions
     {
+        //Extension Method For Sort And Convert To Pagination List
         public static IQueryable sort(this IQueryable queryable,string sortColumn,string sortOrder)
         {
             if (string.IsNullOrWhiteSpace(sortColumn))

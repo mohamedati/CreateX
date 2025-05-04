@@ -120,7 +120,28 @@
   <data name="AccessTokenRefreshed" xml:space="preserve">
     <value>Access Token Refreshed</value>
   </data>
+  <data name="ContainRefusedWords" xml:space="preserve">
+    <value>Contain Refused Words</value>
+  </data>
+  <data name="EmailAlreadyExist" xml:space="preserve">
+    <value>Email Already Exist</value>
+  </data>
+  <data name="ErrorInRegister" xml:space="preserve">
+    <value>Error In Register</value>
+  </data>
   <data name="InvalidAuthorizationHeader" xml:space="preserve">
     <value>Invalid Authorization Header</value>
+  </data>
+  <data name="InvalidEmail" xml:space="preserve">
+    <value>Invalid Email</value>
+  </data>
+  <data name="InvalidOrExpiredOTP" xml:space="preserve">
+    <value>Invalid Or Expired OTP</value>
+  </data>
+  <data name="NotFound" xml:space="preserve">
+    <value>Not Found</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>Field is Required</value>
   </data>
 </root>

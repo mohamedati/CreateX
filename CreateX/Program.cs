@@ -1,4 +1,5 @@
-﻿using API.Extentions;
+﻿using System.Reflection;
+using API.Extentions;
 using Core.Extentions;
 using CreateX.API.Extentions;
 using CreateX.API.MiddleWares;
@@ -6,6 +7,7 @@ using HealthChecks.UI.Client;
 using Infrastructure.DbContext;
 using Infrastructure.Extentions;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -45,7 +47,6 @@ builder.Host.UseSerilog(); // Use Serilog for ASP.NET Core logging
 var app = builder.Build();
 
 
-app.UseMiddleware<GlobalErrorMiddleware>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -67,14 +68,34 @@ if (app.Environment.IsDevelopment())
 }
 
 
-var options = new RequestLocalizationOptions()
+var supportedCultures = new[] { "en", "ar" };
+
+var localizationOptions = new RequestLocalizationOptions()
     .SetDefaultCulture("en")
-    .AddSupportedCultures("en", "ar")
-    .AddSupportedUICultures("en", "ar");
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedCultures);
 
-app.UseRequestLocalization(options);
+localizationOptions.RequestCultureProviders = new List<IRequestCultureProvider>
+{
+    new CustomRequestCultureProvider(context =>
+    {
+        var culture = context.Request.Headers["culture"].FirstOrDefault();
+        if (!string.IsNullOrWhiteSpace(culture) && supportedCultures.Contains(culture))
+        {
+            return Task.FromResult(new ProviderCultureResult(culture, culture));
+        }
 
+        return Task.FromResult(new ProviderCultureResult("en", "en"));
+    })
+};
+
+
+
+app.UseMiddleware<GlobalErrorMiddleware>();
 app.UseRouting();
+app.UseRequestLocalization(localizationOptions);
+
+
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapHealthChecks("/health", new HealthCheckOptions

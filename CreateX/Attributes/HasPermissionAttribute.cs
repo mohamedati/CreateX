@@ -13,7 +13,7 @@ namespace API.Attributes
     public class HasPermissionAttribute: Attribute, IAsyncAuthorizationFilter
     {
 
-
+        //This Attribute To Check that user has been Logged in or not
         public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
         {
             var LangService = context.HttpContext.RequestServices.GetRequiredService<IStringLocalizer<Resource>>();

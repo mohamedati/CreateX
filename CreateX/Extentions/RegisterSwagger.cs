@@ -1,4 +1,5 @@
-﻿using System.Reflection.Metadata.Ecma335;
+﻿using System.Reflection;
+using System.Reflection.Metadata.Ecma335;
 using Microsoft.OpenApi.Models;
 
 namespace API.Extentions
@@ -9,6 +10,9 @@ namespace API.Extentions
         {
             services.AddSwaggerGen(options =>
             {
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                options.IncludeXmlComments(xmlPath);
 
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {

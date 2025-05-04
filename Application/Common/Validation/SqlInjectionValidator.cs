@@ -9,6 +9,7 @@ namespace Application.Common.Validation
     //To Check That Not Sql Injection Attack
     public static class SqlInjectionValidator
     {
+        //Words That Cause Sql Injection
         private static readonly string[] SqlInjectionPatterns = new[]
         {
         "--", ";--", ";", "/*", "*/", "@@",

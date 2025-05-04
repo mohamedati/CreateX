@@ -120,7 +120,29 @@
   <data name="AccessTokenRefreshed" xml:space="preserve">
     <value />
   </data>
+  <data name="ContainRefusedWords" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EmailAlreadyExist" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ErrorInRegister" xml:space="preserve">
+    <value />
+  </data>
   <data name="InvalidAuthorizationHeader" xml:space="preserve">
+    <value />
+  </data>
+  <data name="InvalidEmail" xml:space="preserve">
+    <value />
+  </data>
+  <data name="InvalidOrExpiredOTP" xml:space="preserve">
+    <value />
+  </data>
+  <data name="NotFound" xml:space="preserve">
+    <value />
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Required" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
   </data>
 </root>

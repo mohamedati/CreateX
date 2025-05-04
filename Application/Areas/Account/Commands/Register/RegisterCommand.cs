@@ -32,7 +32,7 @@ namespace Application.Areas.Account.Commands.Register
             var isExist = await _userManager.FindByEmailAsync(request.Email);
             if (isExist !=null)
             {
-                throw new  Exception(localizer["Emailaddressisinuse"]);
+                throw new  Exception(localizer["EmailAlreadyExist"]);
             }
            
             var user = new ApplicationUser()

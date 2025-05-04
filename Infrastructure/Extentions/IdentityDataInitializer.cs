@@ -10,6 +10,7 @@ namespace Infrastructure.Extentions
 {
     public static  class IdentityDataInitializer
     {
+
         public static async Task SeedRolesAsync(IServiceProvider serviceProvider)
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();

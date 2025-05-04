@@ -120,7 +120,28 @@
   <data name="AccessTokenRefreshed" xml:space="preserve">
     <value>تم تحديث التوكن</value>
   </data>
+  <data name="ContainRefusedWords" xml:space="preserve">
+    <value>يحتوى علي كلمات مرفوضة</value>
+  </data>
+  <data name="EmailAlreadyExist" xml:space="preserve">
+    <value>البريد الالكترونى مستخدم بالفعل</value>
+  </data>
+  <data name="ErrorInRegister" xml:space="preserve">
+    <value>خطا في تسجيل الدخول</value>
+  </data>
   <data name="InvalidAuthorizationHeader" xml:space="preserve">
     <value>توكن غير صالح</value>
+  </data>
+  <data name="InvalidEmail" xml:space="preserve">
+    <value>بريد الكترونى غير صالح</value>
+  </data>
+  <data name="InvalidOrExpiredOTP" xml:space="preserve">
+    <value>رمز تحقق  غير صالح</value>
+  </data>
+  <data name="NotFound" xml:space="preserve">
+    <value>غير موجود</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>الحقل مطلوب</value>
   </data>
 </root>

@@ -6,20 +6,14 @@ using Infrastructure.DbContext;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Services.Implemnetation;
-
-using AutoMapper;
 using Application;
-
 using API.Implemnetation;
 using API.Extentions;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Application.Services;
 using Microsoft.AspNetCore.Mvc;
-using FluentValidation.Results;
-using Application.Common.Exceptions;
 using GoBeauti.Application.Common.Behaviours;
 using MediatR;
-
 using FluentValidation;
 using Application.Areas.Account.Commands.Login;
 
@@ -62,6 +56,17 @@ namespace Core.Extentions
                 options.SupportedCultures = supportedCultures.Select(c => new CultureInfo(c)).ToList();
                 options.SupportedUICultures = supportedCultures.Select(c => new CultureInfo(c)).ToList();
                 options.RequestCultureProviders.Insert(0, new QueryStringRequestCultureProvider());
+                options.RequestCultureProviders = new[]
+{
+        new CustomRequestCultureProvider(context =>
+        {
+            var culture = context.Request.Headers["culture"].FirstOrDefault();
+            if (string.IsNullOrEmpty(culture))
+                culture = "en";
+
+            return Task.FromResult(new ProviderCultureResult(culture, culture));
+        })
+    };
 
             });
 
@@ -90,35 +95,16 @@ namespace Core.Extentions
                 options.HeaderName = "X-XSRF-TOKEN";
             });
 
-           services.AddValidatorsFromAssemblyContaining<Program>();
+          
 
-            //  Enable localization support (this is the new way)
-
-
-            ValidatorOptions.Global.LanguageManager.Enabled = true;   // default response for invalid model state   
-
-           services.Configure<ApiBehaviorOptions>(options =>
-            {
-                options.SuppressModelStateInvalidFilter = true;
-            });
+            services.Configure<ApiBehaviorOptions>(options =>
+             {
+                 options.SuppressModelStateInvalidFilter = true;
+             });
 
             services.AddValidatorsFromAssembly(typeof(LoginCommandValidator).Assembly);
 
-            services.Configure<ApiBehaviorOptions>(options =>
-            {
-                options.InvalidModelStateResponseFactory = context =>
-                {
-                    var errors = context
-                        .ModelState.Where(entry => entry.Value.Errors.Count > 0)
-                        .Select(entry => new ValidationFailure
-                        {
-                            PropertyName = string.IsNullOrWhiteSpace(entry.Key) ? "otherErrors" : entry.Key,
-                            ErrorMessage = entry.Value.Errors.Select(e => e.ErrorMessage).FirstOrDefault() ?? "",
-                        });
-
-                    throw new Application.Common.Exceptions.ValidationException(errors);
-                };
-            });
+     
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
             return services;
