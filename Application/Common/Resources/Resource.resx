@@ -120,6 +120,9 @@
   <data name="AccessTokenRefreshed" xml:space="preserve">
     <value />
   </data>
+  <data name="AlreadyExist" xml:space="preserve">
+    <value />
+  </data>
   <data name="ContainRefusedWords" xml:space="preserve">
     <value />
   </data>

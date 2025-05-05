@@ -7,9 +7,9 @@ namespace Createx.Core.Entities;
 
 public class ApplicationUser : IdentityUser
 {
-    public string RefreshToken {  get; set; }
+    public string? RefreshToken {  get; set; }
 
-    public DateTime RefreshTokenExpiresAt { get; set; }
+    public DateTime? RefreshTokenExpiresAt { get; set; }
     public UserType UserType { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }

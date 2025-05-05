@@ -93,29 +93,7 @@ namespace API.Attributes
 
    
 
-        private bool ValidateToken(string token)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.UTF8.GetBytes("VerySecretKeyForJwtGeneration123456789");
-
-            try
-            {
-                tokenHandler.ValidateToken(token, new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false, // You can enable/disable as needed
-                    ValidateAudience = false,
-                    ClockSkew = TimeSpan.Zero
-                }, out SecurityToken validatedToken);
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
+  
     }
 
     }

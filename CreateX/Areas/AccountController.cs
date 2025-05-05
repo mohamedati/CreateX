@@ -42,7 +42,7 @@ namespace API.Areas
         /// <param name="PhoneNumber">PhoneNumber</param>
        
         [HttpPost("Register")]
-        [ProducesResponseType(typeof(UserLoginDTO), 200)]
+        [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         public async Task<ActionResult> Register(RegisterCommand Command)
         {

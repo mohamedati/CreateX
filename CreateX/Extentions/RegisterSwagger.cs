@@ -16,7 +16,7 @@ namespace API.Extentions
 
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "My API",
+                    Title = "CreateX API",
                     Version = "v1"
                 });
 

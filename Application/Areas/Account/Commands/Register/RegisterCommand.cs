@@ -47,7 +47,9 @@ namespace Application.Areas.Account.Commands.Register
             var result = await _userManager.CreateAsync(user, request.Password);
             if (!result.Succeeded)
             {
-                throw new Exception(localizer["ErrorInRegister"]);
+                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                // You can now use 'errors', for example:
+                throw new Exception($"Operation failed: {errors}");
             }
           
           

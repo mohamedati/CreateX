@@ -27,6 +27,8 @@ namespace CreateX.API.Extentions
                 options.Tokens.EmailConfirmationTokenProvider = TokenOptions.DefaultEmailProvider;
             })
            .AddEntityFrameworkStores<Context>()
+               .AddErrorDescriber<LocalizedIdentityErrorDescriber>()
+
            .AddDefaultTokenProviders();
 
             return services;

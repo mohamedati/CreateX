@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
 using Serilog;
 using Serilog.Events;
@@ -152,7 +153,13 @@ using (var scope = app.Services.CreateScope())
 app.UseSerilogRequestLogging(); // Log HTTP requests
 
 app.UseHttpsRedirection();
-
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "Files")
+    ),
+    RequestPath = "/Files"
+});
 app.UseAuthentication();
 app.UseAuthorization();
 
