@@ -1,5 +1,7 @@
 ﻿using Application.Areas.City.Commands.CreateCity;
 using Application.Areas.City.Commands.UpdateCity;
+using Application.Areas.Product.Commands;
+using Application.Areas.Product.Commands.CreateProduct;
 using AutoMapper;
 using Createx.Core.Entities;
 
@@ -11,7 +13,9 @@ namespace API.Configuration
         {
             CreateMap<CreateCity, City>().ReverseMap();
             CreateMap<UpdateCityCommand, City>().ReverseMap();
-            CreateMap<City, City>().ReverseMap();
+            CreateMap<CreateProductCommand, Product>().ReverseMap();
+            CreateMap<UpdateProductCommand, Product>().ReverseMap();
+        
         }
     }
 }
