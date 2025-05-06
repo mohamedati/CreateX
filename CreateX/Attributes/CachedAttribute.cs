@@ -15,9 +15,9 @@ namespace Core.Attributes
 {
     public  class CachedAttribute:Attribute ,IAsyncActionFilter
     {
-        private readonly TimeSpan tTL;
+        private readonly int tTL;
 
-        public CachedAttribute(TimeSpan TTL)
+        public CachedAttribute(int TTL)
         {
             tTL = TTL;
         }
@@ -43,7 +43,7 @@ namespace Core.Attributes
             var endPoint = await next.Invoke();
             if(endPoint.Result is OkObjectResult okObjectResult)
             {
-                await cacheService.SetInCache(cachedKey, okObjectResult.Value,tTL);
+                await cacheService.SetInCache(cachedKey, okObjectResult.Value,TimeSpan.FromMinutes(tTL));
             }
         }
 

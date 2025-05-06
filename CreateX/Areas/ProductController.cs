@@ -6,6 +6,7 @@ using Application.Areas.Product.Commands.DeleteProduct;
 
 using Application.Areas.Product.Queries;
 using Application.Areas.Product.Queries.GetPaginatedProducts;
+using Core.Attributes;
 using Core.Classes;
 using Createx.Core.Entities;
 using MediatR;
@@ -31,6 +32,7 @@ namespace API.Areas
         [HttpGet]
         [ProducesResponseType(typeof(PaginatedList<Product>), 200)]
         [ProducesResponseType(500)]
+        [Cached(600)]
         public async Task<IActionResult> Paginate([FromQuery] GetPaginatedProducts query)
         {
             return await sender.Send(query).ToGenericResponse();
