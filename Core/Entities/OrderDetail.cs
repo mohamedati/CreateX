@@ -13,4 +13,6 @@ public class OrderDetail
     public double Price { get; set; }
 
     public virtual Order Order { get; set; } = null!;
+
+
 }

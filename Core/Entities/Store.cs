@@ -41,4 +41,6 @@ public partial class Store
     public virtual ICollection<Branch> Branches { get; set; } = new List<Branch>();
 
     public virtual ICollection<Category> Categories { get; set; } = new List<Category>();
+
+    public virtual ICollection<Company> Companies  { get; set; } = new List<Company>();
 }

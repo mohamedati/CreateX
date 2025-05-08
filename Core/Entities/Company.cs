@@ -14,7 +14,7 @@ public partial class Company
 
     public int StoreId { get; set; }
 
-    
+    public Store Store {  get; set; }
     public byte[] Photo { get; set; } = null!;
 
     public DateTime CreatedAt { get; set; }

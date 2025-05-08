@@ -19,4 +19,7 @@ public partial class Currency
     public double ExchangeRate { get; set; }
 
     public bool IsPrimary { get; set; }
+
+
+    public IEnumerable<Order> Orders { get; set; }
 }
